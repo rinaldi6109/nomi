@@ -8,285 +8,9 @@ jQuery(document).ready(function() {
 	var colFover='#C100C4',colMover='#0003FF';
 	var colFfix='#F40041',colMfix='#007FFF';
 	var dati;
+	var chart;
 	var ti;
 	
-	var chart=Highcharts.chart('chart', {
-	chart: {
-		type: 'scatter',
-		zoomType: 'xy'
-	},
-	backgroundColor:'transparent',
-	//subtitle: {    text: ''},
-	title: {text: ''},
-	xAxis: {
-		title: {text: 'diffusione',style:{color: "rgba(0,0,0,0.5)"}},
-		max:-3,min:-9,
-		startOnTick: false,
-		endOnTick: false,
-		//						showLastLabel: true,
-		labels: {
-			enabled:true,
-			formatter: function() {	return Math.round(Math.exp(this.value)*100000)/1000+"%";}
-		},
-		tickPositions: [Math.log(0.0001),Math.log(0.00025),Math.log(0.0005),Math.log(0.001),Math.log(0.0025),Math.log(0.005),Math.log(0.001),Math.log(0.0025),Math.log(0.005),Math.log(0.01),Math.log(0.025)],
-		plotLines: [{
-			color: 'red',
-			width: 0,
-			value: -9,
-			label: {
-				text: '> in crescita >',
-				verticalAlign: 'top',align:'right',
-				x: -10,
-				y: 0,
-				rotation: -90
-			}
-			},{
-			color: 'red',
-			width: 0,
-			value: -9,
-			label: {
-				text: '< in calo <',
-				verticalAlign: 'bottom',
-				x: -10,
-				y: 0,
-				rotation: -90
-			}
-		}
-		]
-	},
-	yAxis: {
-		title: {text: 'tendenza',style:{color: "rgba(0,0,0,0.5)"}},
-		max:5,min:-5,
-		gridLineDashStyle: 'Dot',
-		gridLineColor:'rgba(0,0,0,0.25)',
-		tickAmount: 0,
-		labels: {enabled:false},
-		plotLines: [{
-			width: 0,
-			value: -5,
-			label: {
-				text: '> più diffusi >',
-				align: 'right',
-				x: 0,
-				y: 36
-			}
-			},{
-			width: 0,
-			value: -5,
-			label: {
-				text: '< meno diffusi <',
-				align: 'left',
-				x: 0,
-				y: 36
-			}
-			},{
-			width: 1,
-			value: 0,
-			color: 'rgba(0,0,0,0.3)',
-		}
-		]
-
-	},
-	legend: {
-		enabled:false
-	},
-	loading: {
-		labelStyle: {
-			fontSize: "30px",
-			top: "45%"
-		}
-	},
-	plotOptions: {
-		scatter: {
-			states: {
-				//								hover:{
-				//									halo: {size:10,opacity:0.9}
-				//								}
-			},
-			marker: {
-				states: {
-					hover: {
-						//									enabled:true,
-						//										radius:20,
-						//									radiusPlus:5,
-						//										fillColor: '#0000ff',
-						//									lineWidthPlus: 0
-					}
-				}
-			},
-		},
-		series: {
-			lineWidth:1,
-			states: {
-				//								hover: {
-				//									lineWidthPlus: 2,
-				//									halo: {size:10,opacity:0.2}
-				//								},
-				hoverK: {
-					lineWidth: 3,
-					lineWidthPlus: 3,
-				}
-			},
-			marker: {
-				radius: 1,
-				symbol:'circle',
-				fillColor: 'rgba(196,196,196,0.5)',
-				states: {
-					hover: {
-						enabled:true,
-						lineColor: 'rgba(128,128,128,0.25)',
-						radius:4,
-						symbol:'circle',
-						lineWidth:10
-					},
-					hoverF: {
-						enabled:true,
-						lineColor: '#ffffff',
-						fillColor: colFover,
-						radius:3,
-						symbol:'circle',
-						lineWidth:1
-					},
-					hoverM: {
-						enabled:true,
-						lineColor: '#ffffff',
-						fillColor: colMover,
-						radius:3,
-						symbol:'circle',
-						lineWidth:1
-					},
-					hoverK: {
-						enabled:true,
-						lineColor: 'rgba(128,128,128,0.25)',
-						//										fillColor: 'black',
-						radius:4,
-						symbol:'circle',
-						lineWidth:1
-					},
-					hoverFK: {
-						enabled:true,
-						lineColor: '#ffffff',
-						fillColor: colFover,
-						radius:4,
-						symbol:'circle',
-						lineWidth:1
-					},
-					hoverMK: {
-						enabled:true,
-						lineColor: '#ffffff',
-						fillColor: colMover,
-						radius:4,
-						symbol:'circle',
-						lineWidth:1
-					},
-					selectF: {
-						enabled:true,
-						fillColor: '#aaffaa',
-						radius:3,
-						symbol:'circle',
-						lineWidth:1
-					},
-					selectM: {
-						enabled:true,
-						fillColor: '#aaffaa',
-						radius:3,
-						symbol:'circle',
-						lineWidth:1
-					},
-					onlyMarkerF: {
-						enabled:true,
-						lineColor: '#888888',
-						fillColor: colff,
-						radius:4,
-						symbol:'circle',
-						lineWidth:0
-					},
-					onlyMarkerM: {
-						enabled:true,
-						lineColor: '#888888',
-						fillColor: colmm,
-						radius:4,
-						symbol:'circle',
-						lineWidth:0
-					},
-					onlyMarkerFK: {
-						enabled:true,
-						lineColor: '#888888',
-						fillColor: colFover,
-						radius:4,
-						symbol:'circle',
-						lineWidth:0
-					},
-					onlyMarkerMK: {
-						enabled:true,
-						lineColor: '#888888',
-						fillColor: colMover,
-						radius:4,
-						symbol:'circle',
-						lineWidth:0
-					}
-
-				}
-			},
-
-			//stickyTracking: false,
-			point: {
-				events: {
-					mouseOver: function () {
-						if (this.series.index==nn) 
-						evSerie(chart.series[this.index],this,false)
-						else
-						evSerie(this.series,this,false);
-					},
-					mouseOut: function () {
-						if (this.series.index==nn) 
-						disevSerie(chart.series[this.index],false)
-						else
-						disevSerie(this.series,false);
-					},
-					click: function() {
-						if (this.series.index==nn) 
-						selNomeCall(chart.series[this.index].name)
-						else
-						selNomeCall(this.series.name);
-					}
-				}
-			}
-		}
-	},
-	tooltip: {
-		//followPointer:false,
-		shape: 'rect',
-		enabled:true,
-		formatter: function() {
-			if (this.series.index==nn) 
-			return "<b>"+chart.series[this.point.index].name+"</b><br/>anno " + (2015) + 
-			": " + Math.round(Math.exp(this.point.x)*100000) + " nat"+((chart.series[this.point.index].color==colm) ? "i" : "e")+" su 100.000";
-			else
-			return "<b>"+this.series.name+"</b><br/>anno " + ((this.point.index-9)+2015) + 
-			": " + Math.round(Math.exp(this.point.x)*100000) + " nat"+((this.series.color==colm) ? "i" : "e")+" su 100.000";
-		},
-		positioner: function (labelWidth, labelHeight, point) {
-			var tooltipX, tooltipY;
-			if (point.plotX + chart.plotLeft < labelWidth && point.plotY + labelHeight > chart.plotHeight) {
-				tooltipX = chart.plotLeft;
-				tooltipY = chart.plotTop + chart.plotHeight - 2 * labelHeight - 10;
-			} 
-			else {
-				tooltipX = chart.plotLeft;
-				tooltipY = chart.plotTop + chart.plotHeight - labelHeight;
-			}
-			return {
-				x: tooltipX,
-				y: tooltipY
-			};
-		}
-	},
-	series: [] //dati
-});
-
-chart.showLoading("<span>elaborazione in corso...</span>");
-
 	//jQuery("#chart").append("<span style='font-size:30px'>caricamento dati in corso...</span>");
 	
 	jQuery.getJSON("nomi.json", function(data) {
@@ -597,8 +321,284 @@ chart.showLoading("<span>elaborazione in corso...</span>");
 		
 		function drawChart() {
 			
-			//setTimeout(addSeries, 0);
-			addSeries();
+			chart=Highcharts.chart('chart', {
+				chart: {
+					type: 'scatter',
+					zoomType: 'xy'
+				},
+				backgroundColor:'transparent',
+				//subtitle: {    text: ''},
+				title: {text: ''},
+				xAxis: {
+					title: {text: 'diffusione',style:{color: "rgba(0,0,0,0.5)"}},
+					max:-3,min:-9,
+					startOnTick: false,
+					endOnTick: false,
+					//						showLastLabel: true,
+					labels: {
+						enabled:true,
+						formatter: function() {	return Math.round(Math.exp(this.value)*100000)/1000+"%";}
+					},
+					tickPositions: [Math.log(0.0001),Math.log(0.00025),Math.log(0.0005),Math.log(0.001),Math.log(0.0025),Math.log(0.005),Math.log(0.001),Math.log(0.0025),Math.log(0.005),Math.log(0.01),Math.log(0.025)],
+					plotLines: [{
+						color: 'red',
+						width: 0,
+						value: -9,
+						label: {
+							text: '> in crescita >',
+							verticalAlign: 'top',align:'right',
+							x: -10,
+							y: 0,
+							rotation: -90
+						}
+						},{
+						color: 'red',
+						width: 0,
+						value: -9,
+						label: {
+							text: '< in calo <',
+							verticalAlign: 'bottom',
+							x: -10,
+							y: 0,
+							rotation: -90
+						}
+					}
+					]
+				},
+				yAxis: {
+					title: {text: 'tendenza',style:{color: "rgba(0,0,0,0.5)"}},
+					max:5,min:-5,
+					gridLineDashStyle: 'Dot',
+					gridLineColor:'rgba(0,0,0,0.25)',
+					tickAmount: 0,
+					labels: {enabled:false},
+					plotLines: [{
+						width: 0,
+						value: -5,
+						label: {
+							text: '> più diffusi >',
+							align: 'right',
+							x: 0,
+							y: 36
+						}
+						},{
+						width: 0,
+						value: -5,
+						label: {
+							text: '< meno diffusi <',
+							align: 'left',
+							x: 0,
+							y: 36
+						}
+						},{
+						width: 1,
+						value: 0,
+						color: 'rgba(0,0,0,0.3)',
+					}
+					]
+					
+				},
+				legend: {
+					enabled:false
+				},
+				loading: {
+					labelStyle: {
+						fontSize: "30px",
+						top: "45%"
+					}
+				},
+				plotOptions: {
+					scatter: {
+						states: {
+							//								hover:{
+							//									halo: {size:10,opacity:0.9}
+							//								}
+						},
+						marker: {
+							states: {
+								hover: {
+									//									enabled:true,
+									//										radius:20,
+									//									radiusPlus:5,
+									//										fillColor: '#0000ff',
+									//									lineWidthPlus: 0
+								}
+							}
+						},
+					},
+					series: {
+						lineWidth:1,
+						states: {
+							//								hover: {
+							//									lineWidthPlus: 2,
+							//									halo: {size:10,opacity:0.2}
+							//								},
+							hoverK: {
+								lineWidth: 3,
+								lineWidthPlus: 3,
+							}
+						},
+						marker: {
+							radius: 1,
+							symbol:'circle',
+							fillColor: 'rgba(196,196,196,0.5)',
+							states: {
+								hover: {
+									enabled:true,
+									lineColor: 'rgba(128,128,128,0.25)',
+									radius:4,
+									symbol:'circle',
+									lineWidth:10
+								},
+								hoverF: {
+									enabled:true,
+									lineColor: '#ffffff',
+									fillColor: colFover,
+									radius:3,
+									symbol:'circle',
+									lineWidth:1
+								},
+								hoverM: {
+									enabled:true,
+									lineColor: '#ffffff',
+									fillColor: colMover,
+									radius:3,
+									symbol:'circle',
+									lineWidth:1
+								},
+								hoverK: {
+									enabled:true,
+									lineColor: 'rgba(128,128,128,0.25)',
+									//										fillColor: 'black',
+									radius:4,
+									symbol:'circle',
+									lineWidth:1
+								},
+								hoverFK: {
+									enabled:true,
+									lineColor: '#ffffff',
+									fillColor: colFover,
+									radius:4,
+									symbol:'circle',
+									lineWidth:1
+								},
+								hoverMK: {
+									enabled:true,
+									lineColor: '#ffffff',
+									fillColor: colMover,
+									radius:4,
+									symbol:'circle',
+									lineWidth:1
+								},
+								selectF: {
+									enabled:true,
+									fillColor: '#aaffaa',
+									radius:3,
+									symbol:'circle',
+									lineWidth:1
+								},
+								selectM: {
+									enabled:true,
+									fillColor: '#aaffaa',
+									radius:3,
+									symbol:'circle',
+									lineWidth:1
+								},
+								onlyMarkerF: {
+									enabled:true,
+									lineColor: '#888888',
+									fillColor: colff,
+									radius:4,
+									symbol:'circle',
+									lineWidth:0
+								},
+								onlyMarkerM: {
+									enabled:true,
+									lineColor: '#888888',
+									fillColor: colmm,
+									radius:4,
+									symbol:'circle',
+									lineWidth:0
+								},
+								onlyMarkerFK: {
+									enabled:true,
+									lineColor: '#888888',
+									fillColor: colFover,
+									radius:4,
+									symbol:'circle',
+									lineWidth:0
+								},
+								onlyMarkerMK: {
+									enabled:true,
+									lineColor: '#888888',
+									fillColor: colMover,
+									radius:4,
+									symbol:'circle',
+									lineWidth:0
+								}
+								
+							}
+						},
+						
+						//stickyTracking: false,
+						point: {
+							events: {
+								mouseOver: function () {
+									if (this.series.index==nn) 
+									evSerie(chart.series[this.index],this,false)
+									else
+									evSerie(this.series,this,false);
+								},
+								mouseOut: function () {
+									if (this.series.index==nn) 
+									disevSerie(chart.series[this.index],false)
+									else
+									disevSerie(this.series,false);
+								},
+								click: function() {
+									if (this.series.index==nn) 
+									selNomeCall(chart.series[this.index].name)
+									else
+									selNomeCall(this.series.name);
+								}
+							}
+						}
+					}
+				},
+				tooltip: {
+					//followPointer:false,
+					shape: 'rect',
+					enabled:true,
+					formatter: function() {
+						if (this.series.index==nn) 
+						return "<b>"+chart.series[this.point.index].name+"</b><br/>anno " + (2015) + 
+						": " + Math.round(Math.exp(this.point.x)*100000) + " nat"+((chart.series[this.point.index].color==colm) ? "i" : "e")+" su 100.000";
+						else
+						return "<b>"+this.series.name+"</b><br/>anno " + ((this.point.index-9)+2015) + 
+						": " + Math.round(Math.exp(this.point.x)*100000) + " nat"+((this.series.color==colm) ? "i" : "e")+" su 100.000";
+					},
+					positioner: function (labelWidth, labelHeight, point) {
+						var tooltipX, tooltipY;
+						if (point.plotX + chart.plotLeft < labelWidth && point.plotY + labelHeight > chart.plotHeight) {
+							tooltipX = chart.plotLeft;
+							tooltipY = chart.plotTop + chart.plotHeight - 2 * labelHeight - 10;
+						} 
+						else {
+							tooltipX = chart.plotLeft;
+							tooltipY = chart.plotTop + chart.plotHeight - labelHeight;
+						}
+						return {
+							x: tooltipX,
+							y: tooltipY
+						};
+					}
+				},
+				series: [] //dati
+			});
+			
+			chart.showLoading("<span>elaborazione in corso...</span>");
+			setTimeout(addSeries, 0);
+			//				addSeries();
 			//				chart.series=dati;
 			
 			jQuery("#nomi span").hover(
