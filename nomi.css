@@ -1,0 +1,174 @@
+		body {
+			font-family:Verdana,Calibri,Sans Serif;
+			font-size:small;
+		}
+
+		#outerc {
+			position:relative;
+			width:18%;
+			height:100%;
+			min-height:600px; 
+			height:600px;
+			float:left
+		}
+
+		#outer {
+			list-style-type:none;
+			padding:0;font-weight:900;
+			float:left;
+			width:1.75em;
+			position:relative;
+		}
+		
+		#outer li {
+			cursor:default;
+			padding:2px 0;
+			margin:1px 1px 0;
+			background-color:#aaaaaa;
+			display:block;
+			float:left;
+			width:1.25em;
+			text-align:center;
+			border-top-left-radius:5px;
+			text-decoration:none;
+		}
+
+		#outer li:not(.disabled){
+			background-color:#555555;
+		} 
+		#outer li:not(.disabled):hover {
+			background-color:#111111;
+		}
+		#outer li a {
+			color:#ffffff;
+			text-decoration:none;
+		}
+		
+		#nomi {
+			position:relative;
+			height:100%;
+			overflow-y:auto;overflow-x:hidden;
+			text-align:left;
+		}
+		
+		.nomi span {
+			cursor:default;
+			display:inline-block;
+			padding:2px 4px; 
+			margin:1px 2px;
+			border-radius:3px;
+			color:#000000;
+		}
+		.nomi .male {background-color:#e8e8e8;color:#007FFF}
+		.nomi .female {background-color:#e8e8e8;color:#F400A1}
+		.nomi .selected, #nomi .male:hover, #nomi .female:hover {
+		//		transition:color 0.1s, background-color 0.1s;
+		}
+
+		.nomi .male.selected {background-color:#007FFF;color:#ffffff}
+		#nomi .male:hover, #selez span.male:hover  {background-color:#003FFF;color:#ffffff}
+		.nomi .female.selected {background-color:#F40041;color:#ffffff}
+		#nomi .female:hover, #selez span.female:hover  {background-color:#CC0036;color:#ffffff}
+
+		.highcharts-legend-loading, .highcharts-legend-loading-inner {
+		font-size:30px;
+		}
+		
+		#selez {
+			text-align:left !important;
+			overflow:hidden;
+		}
+
+		#selez span {
+			border-top-right-radius:10px;
+			border-bottom-right-radius:10px;
+		}
+		
+		#selez span b::before {content: " \00d7";}
+		#selez span {  
+		//pointer-events: none;
+		}
+		#selez span b {pointer-events: auto;}
+		#selez span b:hover {color:#000}
+
+		#container {
+			float:left;width:82%;			
+			position:relative;
+		}
+
+		#chartc {
+			width:100%;
+			height:90%;
+			position: relative;
+		}
+		
+		#chart {
+			position: absolute;
+			line-height:600px;
+			text-align:center;
+			width: 100%;
+			height:100%;
+		}
+
+		#cp1 {
+			width:100%;
+		}
+		#cp2 {
+			float:left; margin-right:2em;
+		}
+
+		.cpanel {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			margin:auto;
+			text-align:center;
+			font-variant: small-caps;
+			font-size:medium;
+			font-family:Calibri,Verdana,Sans Serif;
+		}
+		
+		.cpanel label {
+			text-align:center;
+			display:inline-block;
+			min-width:1.5em;
+			padding:0 0.5em;
+			background-color:#dddddd;
+		}
+		.cpanel label.left {
+			border-top-left-radius:3px;
+			border-bottom-left-radius:3px;
+			border:1px solid grey;
+		}
+		.cpanel label.center {
+			border-top:1px solid grey;
+			border-bottom:1px solid grey;
+			border-right:1px solid grey;
+		}
+		.cpanel label.right {
+			border-top-right-radius:3px;
+			border-bottom-right-radius:3px;
+			border-top:1px solid grey;
+			border-bottom:1px solid grey;
+			border-right:1px solid grey;
+		}
+		
+		.cpanel label.selected {
+			background-color:#b8b8b8 !important;
+			font-weight:900;
+		}
+		.cpanel label.left:hover:not(.selected):not(.off), .cpanel label.center:hover:not(.selected):not(.off), .cpanel label.right:hover:not(.selected):not(.off) {
+			background-color:#d0d0d0 !important
+		}
+		#azzera.off,#azzera.off:hover {
+		color:#b0b0b0;
+		border: 1px solid #a8a8a8;
+		}
+		
+		#sesso   #male {color:#007FFF;}
+		#sesso #female {color:#FA0041;}
+		#sesso   #both {color:#444444;}
+		#sesso label.selected {font-weight:bold;}
