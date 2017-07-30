@@ -8,8 +8,10 @@ jQuery(document).ready(function() {
 	var colFover='#C100C4',colMover='#0003FF';
 	var colFfix='#F40041',colMfix='#007FFF';
 	var dati;
+	var chart;
+	var ti;
 	
-	jQuery("#chart").html("<span style='font-size:30px'>caricamento dati in corso...</span>");
+	jQuery("#chart").append("<span style='font-size:30px'>caricamento dati in corso...</span>");
 	
 	jQuery.getJSON("nomi.json", function(data) {
 		dati=data.items;
@@ -126,6 +128,14 @@ jQuery(document).ready(function() {
 		}
 		//				console.log("scroll:"+jQuery("#nomi").hasScrollBar());		
 		
+		var lsel;
+		
+		jQuery.fn.outerHTML = function() {
+			return jQuery('<div />').append(this.eq(0).clone()).html();
+		};
+		
+		jQuery("#selez").append("<span></span>");
+		
 		jQuery("#outer li:not(.disabled) a").click(function (event) {
 			event.preventDefault();
 			var letter=this.innerHTML;
@@ -137,76 +147,10 @@ jQuery(document).ready(function() {
 			}
 		});
 		
-		var lsel;
-		
-		jQuery.fn.outerHTML = function() {
-			return jQuery('<div />').append(this.eq(0).clone()).html();
-		};
-		
-		jQuery("#selez").append("<span></span>");
 		
 		jQuery("#nomi span").click(function (event) {
 			event.preventDefault();
 			selNome(jQuery(this),null);
-		});
-		
-		jQuery("#nomi span").hover(
-		function (event) {
-			event.preventDefault();
-			var rnome=jQuery(this).text();
-			var k=jQuery(nomi).filter(function(){return this[0]==rnome})[0][1];
-			evSerie(chart.series[k],null,false);
-		},
-		function(event) {
-			event.preventDefault();
-			var rnome=jQuery(this).text();
-			var k=jQuery(nomi).filter(function(){return this[0]==rnome})[0][1];
-			disevSerie(chart.series[k]);
-			//				chart.series[chart.series.length-1].setVisible(false,false);
-		}
-		);
-		
-		jQuery("#selez").on("mouseover","span:not(:last)",function (event) {
-			console.log("in");
-			event.preventDefault();
-			var rnome=jQuery(this).text();
-			console.log(rnome);
-			var k=jQuery(nomi).filter(function(){return this[0]==rnome});
-			if (k.length>0) {
-				k=k[0][1];
-				if (k>=0) evSerie(chart.series[k],false)
-				else console.log(k);
-			}
-		});
-		
-		jQuery("#selez").on("mouseout","span:not(:last)",function (event) {
-			console.log("out");
-			event.preventDefault();
-			var rnome=jQuery(this).text();
-			console.log(rnome);
-			var k=jQuery(nomi).filter(function(){return this[0]==rnome});
-			if (k.length>0) {
-				k=k[0][1];
-				if (k>=0) disevSerie(chart.series[k],false)
-				else console.log(k);
-			}
-		});
-		
-		jQuery("#selez").on("click","span b",function (event) {
-			console.log("selez click");
-			event.preventDefault();
-			var rnome=jQuery(this).parent().text();
-			jQuery("#nomi span").filter(function(){return  jQuery(this).text() == rnome;}).removeClass("selected");
-			jQuery(this).parent().remove();
-			jQuery("#selez span:last").text("")
-			if (jQuery("#selez span").length<2) jQuery("#azzera").addClass("off");
-			
-			var k=jQuery(nomi).filter(function(){return this[0]==rnome});
-			if (k.length>0) {
-				k=k[0][1];
-				if (k>=0) disevSerie(chart.series[k],true)
-				else console.log(k);
-			}
 		});
 		
 		function selNome(el,k) {
@@ -374,9 +318,6 @@ jQuery(document).ready(function() {
 			azzera();
 		});
 		
-		
-		var chart;
-		var ti;
 		
 		function drawChart() {
 			
@@ -659,6 +600,65 @@ jQuery(document).ready(function() {
 			setTimeout(addSeries, 0);
 			//				addSeries();
 			//				chart.series=dati;
+			
+			jQuery("#nomi span").hover(
+			function (event) {
+				event.preventDefault();
+				var rnome=jQuery(this).text();
+				var k=jQuery(nomi).filter(function(){return this[0]==rnome})[0][1];
+				evSerie(chart.series[k],null,false);
+			},
+			function(event) {
+				event.preventDefault();
+				var rnome=jQuery(this).text();
+				var k=jQuery(nomi).filter(function(){return this[0]==rnome})[0][1];
+				disevSerie(chart.series[k]);
+				//				chart.series[chart.series.length-1].setVisible(false,false);
+			}
+			);
+			
+			jQuery("#selez").on("mouseover","span:not(:last)",function (event) {
+				console.log("in");
+				event.preventDefault();
+				var rnome=jQuery(this).text();
+				console.log(rnome);
+				var k=jQuery(nomi).filter(function(){return this[0]==rnome});
+				if (k.length>0) {
+					k=k[0][1];
+					if (k>=0) evSerie(chart.series[k],false)
+					else console.log(k);
+				}
+			});
+			
+			jQuery("#selez").on("mouseout","span:not(:last)",function (event) {
+				console.log("out");
+				event.preventDefault();
+				var rnome=jQuery(this).text();
+				console.log(rnome);
+				var k=jQuery(nomi).filter(function(){return this[0]==rnome});
+				if (k.length>0) {
+					k=k[0][1];
+					if (k>=0) disevSerie(chart.series[k],false)
+					else console.log(k);
+				}
+			});
+			
+			jQuery("#selez").on("click","span b",function (event) {
+				console.log("selez click");
+				event.preventDefault();
+				var rnome=jQuery(this).parent().text();
+				jQuery("#nomi span").filter(function(){return  jQuery(this).text() == rnome;}).removeClass("selected");
+				jQuery(this).parent().remove();
+				jQuery("#selez span:last").text("")
+				if (jQuery("#selez span").length<2) jQuery("#azzera").addClass("off");
+				
+				var k=jQuery(nomi).filter(function(){return this[0]==rnome});
+				if (k.length>0) {
+					k=k[0][1];
+					if (k>=0) disevSerie(chart.series[k],true)
+					else console.log(k);
+				}
+			});
 			
 		};
 		
