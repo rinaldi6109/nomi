@@ -9,7 +9,7 @@ jQuery(document).ready(function() {
 	var colFfix='#F40041',colMfix='#007FFF';
 	var dati;
 	
-	jQuery("#chart").append("<span style='font-size:30px'>caricamento dati in corso...</span>");
+	jQuery("#chart").html("<span style='font-size:30px'>caricamento dati in corso...</span>");
 	
 	jQuery.getJSON("nomi.json", function(data) {
 		dati=data.items;
