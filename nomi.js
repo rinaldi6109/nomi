@@ -230,6 +230,10 @@ jQuery(document).ready(function() {
 					//						el.select(true,true);
 					el.options.lineWidth=3;
 					//						el.lineWidth=3;
+					chart.series[nn].points[el.index].setState("onlyMarker"+((el.color==colm) ? 'M' : 'F')+"K");	
+					setTimeout(function() {
+					chart.series[nn].points[el.index].setState("onlyMarker"+((el.color==colm) ? 'M' : 'F')+"K")	
+					},0);
 					
 				}
 				//					el.graph.attr({"stroke-width": 3}); 
