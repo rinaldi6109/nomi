@@ -244,6 +244,7 @@ jQuery(document).ready(function() {
 			var c=(el.color==colm) ? colm : colf;
 			el.graph.attr({stroke: c});
 			el.graph.attr({"stroke-width": 1})
+			el.options.lineWidth=1;			
 			el.data.forEach(p => {
 				//p.graph.attr({fill:'#bbbbbb'});
 			p.setState();});
