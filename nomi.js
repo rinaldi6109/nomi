@@ -230,7 +230,7 @@ jQuery(document).ready(function() {
 					//						el.select(true,true);
 					el.options.lineWidth=3;
 					//						el.lineWidth=3;
-					chart.series[nn].points[el.index].setState("onlyMarker"+((el.color==colm) ? 'M' : 'F')+"K");	
+//					chart.series[nn].points[el.index].update({marker:{fillColor:(el.color==colm) ? colMover : colFover}});
 					setTimeout(function() {
 					chart.series[nn].points[el.index].setState("onlyMarker"+((el.color==colm) ? 'M' : 'F')+"K")	
 					},0);
@@ -244,11 +244,12 @@ jQuery(document).ready(function() {
 			var c=(el.color==colm) ? colm : colf;
 			el.graph.attr({stroke: c});
 			el.graph.attr({"stroke-width": 1})
-			el.options.lineWidth=1;			
+			el.options.lineWidth=1;
 			el.data.forEach(p => {
 				//p.graph.attr({fill:'#bbbbbb'});
 			p.setState();});
 			chart.series[nn].points[el.index].setState("onlyMarker"+((el.color==colm) ? 'M' : 'F'));
+//			chart.series[nn].points[el.index].update({marker:{fillColor:(el.color==colm) ? colm : colf}});
 			//				ti=setTimeout(function() {forceState(el)},0);
 			//				console.log("confirmed");
 		}
