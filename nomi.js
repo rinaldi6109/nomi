@@ -17,7 +17,6 @@ jQuery(document).ready(function() {
 	jQuery.getJSON("nomi.json", function(data) {
 		dati=data.items;
 		year=data.year;
-		alert(year);
 		
 		var nn=dati.length;
 		
@@ -580,10 +579,10 @@ jQuery(document).ready(function() {
 					enabled:true,
 					formatter: function() {
 						if (this.series.index==nn) 
-						return "<b>"+chart.series[this.point.index].name+"</b><br/>anno " + (2015) + 
+						return "<b>"+chart.series[this.point.index].name+"</b><br/>anno " + year + 
 						": " + Math.round(Math.exp(this.point.x)*100000) + " nat"+((chart.series[this.point.index].color==colm) ? "i" : "e")+" su 100.000";
 						else
-						return "<b>"+this.series.name+"</b><br/>anno " + ((this.point.index-9)+2015) + 
+						return "<b>"+this.series.name+"</b><br/>anno " + ((this.point.index-9)+year) + 
 						": " + Math.round(Math.exp(this.point.x)*100000) + " nat"+((this.series.color==colm) ? "i" : "e")+" su 100.000";
 					},
 					positioner: function (labelWidth, labelHeight, point) {
