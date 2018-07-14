@@ -8,6 +8,7 @@ jQuery(document).ready(function() {
 	var colFover='#C100C4',colMover='#0003FF';
 	var colFfix='#F40041',colMfix='#007FFF';
 	var dati;
+	var year;
 	var chart;
 	var ti;
 	
@@ -15,6 +16,8 @@ jQuery(document).ready(function() {
 	
 	jQuery.getJSON("nomi.json", function(data) {
 		dati=data.items;
+		year=data.year;
+		alert(year);
 		
 		var nn=dati.length;
 		
